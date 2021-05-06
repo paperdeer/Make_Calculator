@@ -5,8 +5,8 @@ const runarr = [];
 let first=0;
 let second = 0;
 let result = 0;
+let eachnum = [];
 let sum = 0;
-const type = [];
 for(i = 0;i<arr.length;i++){
         btnbox.innerHTML += `<span class="btn">${arr[i]}</span>`;
     }
@@ -17,73 +17,67 @@ input = () => {
         btns[i].addEventListener("click", () => {
             screen.innerHTML += `<span class="number">${arr[i]}</span>`; 
             runarr.push(arr[i]);
-            switch(arr[i]){
-                case '+':
-                    console.log("+")
-                    type.push('+');
-                    for(let j = 0;j<runarr.length-1;j++){
-                        first += runarr[j];
-                    }
-                    first = Number(first);
-                    runarr.splice(0,runarr.length);
-                    break;
-                case '-':
-                    console.log("-")
-                    type.push('-');
-                    for(let j = 0;j<runarr.length-1;j++){
-                        first += runarr[j];
-                    }
-                    runarr.splice(0,runarr.length);
-                    first = Number(first);
-                    break;
-                case '*':
-                    console.log("*")
-                    type.push('*');
-                    for(let j = 0;j<runarr.length-1;j++){
-                        first += runarr[j];
-                    }
-                    first = Number(first);
-                    runarr.splice(0,runarr.length);
-                    break;
-                case '/':
-                    console.log("/")
-                    type.push('/');
-                    for(let j = 0;j<runarr.length-1;j++){
-                        first += runarr[j];
-                    }
-                    first = Number(first);
-                    runarr.splice(0,runarr.length);
-                    break;
+            console.log(runarr.length)
+            console.log(runarr)
+            if(arr[i] == "+" || arr[i] == "-" || arr[i] == "*" || arr[i] == "/"){
+                for(let j = 0;j<runarr.length-1;j++){
+                    first += runarr[j];
+                    first = Number(first)
+                    console.log(runarr[j]);
+                }
+                first = Number(first);
+                eachnum.push(first);
+                eachnum.push(arr[i]);
+                // runarr.splice(1,runarr.length);
+                first = 0;
+                console.log(first);
             }
             if(arr[i] == "="){
                 for(let j = 0;j<runarr.length-1;j++){
-                    second += runarr[j];
-                    second = Number(second);
+                    first = 0;
+                    first += runarr[j];
+                    first = Number(first)
+                    console.log(runarr)
                 }
-                if(type[0]=="+"){
-                    result = first + second;
-                }
-                if(type[0]=="-"){
-                    result = first - second;
-                }
-                if(type[0]=="*"){
-                    result = first * second;
-                }
-                if(type[0]=="/"){
-                    result = first / second;
-                }
-                runarr.splice(0,runarr.length)
-                screen.innerHTML = "";
+                
+                first = Number(first);
+                eachnum.push(first);
                 first = 0;
-                second = 0;
-                screen.innerHTML += result;
-                type.splice(0,type.length);
-                first = result;
-            }
-            if(arr[i] == "AC"){
-                screen.innerHTML = "";
-                type.splice(0,type.length);   
-                runarr.splice(0,runarr.length);
+                for(let i = 0;i<eachnum.length;i++){
+                    if(eachnum[i] == "+"){
+                        result += Number(eachnum[i-1]) + Number(eachnum[i+1]);
+                        console.log(eachnum)
+                        // eachnum = [];
+                        // eachnum[0] = result;
+                        eachnum[i+1] = result;
+                        break;
+                    }
+                    if(eachnum[i] == "-"){
+                        result += Number(eachnum[i-1]) - Number(eachnum[i+1]);
+                        console.log(eachnum)
+                        // eachnum = [];
+                        // eachnum[0] = result;
+                        eachnum[i+1] = result;
+                        break;
+                    }
+                    if(eachnum[i] == "*"){
+                        result += Number(eachnum[i-1]) * Number(eachnum[i+1]);
+                        console.log(eachnum)
+                        // eachnum = [];
+                        // eachnum[0] = result;
+                        eachnum[i+1] = result;
+                        break;
+                    }
+                    if(eachnum[i] == "/"){
+                        result += Number(eachnum[i-1]) /Number(eachnum[i+1]);
+                        console.log(eachnum)
+                        // eachnum = [];
+                        // eachnum[0] = result;
+                        result[i+1] = result;
+                        break;
+                    }
+                }
+                screen.innerHTML = result;
             }
         })
     }
